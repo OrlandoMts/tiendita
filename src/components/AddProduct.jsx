@@ -1,10 +1,9 @@
 import React, { useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { closeModal } from '../redux/actions';
 import { useForm } from 'react-hook-form';
 
 const AddProduct = () => {
-  const modal = useSelector(state => state.modal);
   const dispatch = useDispatch();
   const { register, handleSubmit, formState: { errors } } = useForm();
   const form = useRef(null);

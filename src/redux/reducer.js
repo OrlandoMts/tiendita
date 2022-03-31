@@ -1,8 +1,10 @@
-import { OPEN_MODAL, CLOSE_MODAL } from "./types";
+import { OPEN_MODAL, CLOSE_MODAL, OPEN_MODAL_EDIT, CLOSE_MODAL_EDIT, SET_PRODUCTS, SEARCH_PRODUCT } from "./types";
 
 const initialState = {
     list: [],
-    modal: false
+    modal: false,
+    modalEdit: false,
+    filter: []
 }
 
 export const reducer = (state = initialState, action) => {
@@ -16,6 +18,26 @@ export const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 modal: action.payload
+            }
+        case OPEN_MODAL_EDIT:
+            return {
+                ...state,
+                modalEdit: action.payload
+            }
+        case CLOSE_MODAL_EDIT:
+            return {
+                ...state,
+                modalEdit: action.payload
+            }
+        case SET_PRODUCTS:
+            return {
+                ...state,
+                list: action.payload
+            }
+        case SEARCH_PRODUCT:
+            return {
+                ...state,
+                list: action.payload
             }
         default:
             return { ...state } 

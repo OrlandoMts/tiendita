@@ -1,9 +1,14 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux';
+import { filterProducts } from '../redux/actions';
 
 const Navbar = () => {
+
+  const list = useSelector(state => state.list);
+  const dispatch = useDispatch();
   
   const handleSearch = event => {
-    console.log(event.target.value);
+    dispatch(filterProducts(list, event.target.value))
   }
 
   return (
