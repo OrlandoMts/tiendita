@@ -1,4 +1,7 @@
-import { OPEN_MODAL, CLOSE_MODAL, OPEN_MODAL_EDIT, CLOSE_MODAL_EDIT, SET_PRODUCTS, SEARCH_PRODUCT } from "./types";
+import { OPEN_MODAL, CLOSE_MODAL, 
+        OPEN_MODAL_EDIT, CLOSE_MODAL_EDIT, 
+        SET_PRODUCTS, SEARCH_PRODUCT,
+        DELETE_PRODUCT } from "./types";
 
 const initialState = {
     list: [],
@@ -32,9 +35,15 @@ export const reducer = (state = initialState, action) => {
         case SET_PRODUCTS:
             return {
                 ...state,
-                list: action.payload
+                list: action.payload,
+                filter: action.payload
             }
         case SEARCH_PRODUCT:
+            return {
+                ...state,
+                filter: action.payload
+            }
+        case DELETE_PRODUCT:
             return {
                 ...state,
                 list: action.payload

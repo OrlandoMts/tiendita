@@ -1,15 +1,28 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { AiOutlineDelete, AiFillEdit } from "react-icons/ai";
-import { openModalEdit, openModal } from '../redux/actions';
+import { openModalEdit, openModal, deleteProduct, getCollectionProducts } from '../redux/actions';
 import EditProduct from './EditProduct';
+import { deleteDoc, doc, collection } from 'firebase/firestore';
+import { db } from '../firebase';
 
-const Product = ({name, description, price}) => {
+const Product = ({ id, name, description, price }) => {
   const modalEdit = useSelector(state => state.modalEdit);
   const dispatch = useDispatch();
+  const productsCollection = collection(db,"products");
 
   const handleOpenModalEdit = () => {
     dispatch(openModalEdit(true))
+  }
+
+  const clearProductList = async id => {
+    const productDoc = doc(db, 'products', id);
+    return await deleteDoc(productDoc);
+  }
+
+  const handleDeleteProduct = (id) => {
+    dispatch(deleteProduct(clearProductList(id)));
+    dispatch(getCollectionProducts(productsCollection))
   }
 
   return (
@@ -21,13 +34,10 @@ const Product = ({name, description, price}) => {
       </div>
       <div className='flex'>
         <button onClick={handleOpenModalEdit} className='mx-6'><AiFillEdit size={20}/></button>
-        <button ><AiOutlineDelete size={20}/></button>
+        <button onClick={() => handleDeleteProduct(id)}><AiOutlineDelete size={20}/></button>
       </div>
       
     </section>
-        // {
-        //   modalEdit && <EditProduct />
-        // }
   )
 }
 

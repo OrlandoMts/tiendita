@@ -1,5 +1,8 @@
 import { getDocs } from 'firebase/firestore'
-import { OPEN_MODAL, CLOSE_MODAL, CLOSE_MODAL_EDIT, OPEN_MODAL_EDIT, SET_PRODUCTS, SEARCH_PRODUCT} from './types'
+import { OPEN_MODAL, CLOSE_MODAL, 
+        CLOSE_MODAL_EDIT, OPEN_MODAL_EDIT, 
+        SET_PRODUCTS, SEARCH_PRODUCT, 
+        DELETE_PRODUCT} from './types'
 
 export const openModal = payload => ({
     type: OPEN_MODAL,
@@ -55,15 +58,11 @@ export const filterProducts = (payload, input) => dispatch => {
 
         return productText.includes(searchText);
     })
-
-    console.log(searchedProducts)
-
     dispatch(searchProduct(searchedProducts))
 }
 
-// const newArray = state.cart.filter(product => product != payload);
-//         setState({
-//             ...state,
-//             cart: [...newArray],
-//             total: (state.total - payload.price ),
-//         })
+export const deleteProduct = payload => ({
+    type: DELETE_PRODUCT,
+    payload
+})
+
