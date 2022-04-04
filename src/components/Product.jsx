@@ -5,6 +5,10 @@ import { openModalEdit, openModal, deleteProduct, getCollectionProducts } from '
 import EditProduct from './EditProduct';
 import { deleteDoc, doc, collection } from 'firebase/firestore';
 import { db } from '../firebase';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 const Product = ({ id, name, description, price }) => {
   const modalEdit = useSelector(state => state.modalEdit);
@@ -21,8 +25,25 @@ const Product = ({ id, name, description, price }) => {
   }
 
   const handleDeleteProduct = (id) => {
-    dispatch(deleteProduct(clearProductList(id)));
-    dispatch(getCollectionProducts(productsCollection))
+    MySwal.fire({
+      title: '¿Estas seguro de eliminar el producto?',
+      text: "No podras revertir los cambios",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(deleteProduct(clearProductList(id)));
+        dispatch(getCollectionProducts(productsCollection));
+        MySwal.fire(
+          'Eliminado!',
+          'El producto ha sido eliminado.',
+          'success'
+        )
+      }
+    })
   }
 
   return (

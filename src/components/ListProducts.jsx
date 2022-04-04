@@ -1,7 +1,7 @@
 import React from 'react'
 import Product from './Product'
 import { useSelector, useDispatch } from 'react-redux'
-import { openModal, getCollectionProducts } from '../redux/actions'
+import { openModal, getCollectionProducts, closeModal } from '../redux/actions'
 import AddProduct from './AddProduct'
 import EditProduct from './EditProduct'
 import { collection, getDocs, getDoc, deleteDoc, doc} from 'firebase/firestore'

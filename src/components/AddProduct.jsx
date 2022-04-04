@@ -2,37 +2,45 @@ import React, { useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { closeModal } from '../redux/actions';
 import { useForm } from 'react-hook-form';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from "../firebase/index";
 
 const AddProduct = () => {
   const dispatch = useDispatch();
   const { register, handleSubmit, formState: { errors } } = useForm();
   const form = useRef(null);
-  
-  const onSubmit = data => console.log(data);
+
+  const productsCollection = collection(db, "products");
+
+  const createProduct = async data => {
+    await addDoc(productsCollection, data);
+    handleCloseModal();
+  }
 
   const handleCloseModal = () => {
     dispatch(closeModal(false))
   }
+
   return (
     <section className='w-3/4 p-4 bg-[#CCDBF6] rounded-lg shadow-sm absolute top-0'>
-      <form onSubmit={handleSubmit(onSubmit)} ref={form}>
+      <form onSubmit={handleSubmit(createProduct)} ref={form}>
         <div>
-          <label htmlFor="product" className="block text-sm font-medium text-gray-700">Producto</label>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700">Producto</label>
             <input
                 type="text"
-                name="product"
+                name="name"
                 maxLength="80"
-                id="product"
+                id="name"
                 autoComplete=""
                 className="mt-1 h-8 p-2 w-10/12 focus:outline outline-offset-2 focus:outline-blue-500 block shadow-lg sm:text-sm border-gray-300 rounded-md"
-                {...register("product", {
+                {...register("name", {
                     required: {
                         value: true,
                         message: "Campo requerido"
                     }
                 })}
             />
-            {errors.product && <span className="text-red-600 font-semibold text-xs">{errors.product.message}</span>}
+            {errors.name && <span className="text-red-600 font-semibold text-xs">{errors.name.message}</span>}
         </div>
         <div>
           <label htmlFor="description" className="block text-sm font-medium text-gray-700">Descripción</label>
