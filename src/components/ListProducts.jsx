@@ -14,7 +14,6 @@ const ListProducts = () => {
   const modalEdit =useSelector(state => state.modalEdit);
 
   const dispatch = useDispatch();
-// Aqui empieza el video
   
   const productsCollection = collection(db,"products");
 

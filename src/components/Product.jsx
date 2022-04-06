@@ -11,8 +11,10 @@ import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal)
 
 const Product = ({ id, name, description, price }) => {
+  
   const modalEdit = useSelector(state => state.modalEdit);
   const dispatch = useDispatch();
+  
   const productsCollection = collection(db,"products");
 
   const handleOpenModalEdit = () => {
